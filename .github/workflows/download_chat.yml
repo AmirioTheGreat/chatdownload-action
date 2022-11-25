@@ -1,0 +1,53 @@
+# This is a basic workflow to help you get started with Actions
+
+name: Download Livestream Chat
+
+concurrency: streamdownloader
+# Controls when the workflow will run
+on:
+  schedule:
+    - cron: '*/5 * * * *'  # every 5 minutes
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  download-chat:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      - name: Check Stream Is Live
+        env:
+          channelid: InfraredShow
+        id: livecheck
+        run: curl -s https://www.youtube.com/c/"$channelid"/live | grep -o '"isLive":true' -c
+        continue-on-error: true
+
+      - name: Install dependencies
+        id: predownload
+        if: steps.livecheck.outcome == 'success'
+        run: |
+          sudo apt-get install -y ffmpeg
+          pip install chat-downloader
+
+      - name: Download streamchat
+        env:
+          channelid: InfraredShow
+        if: steps.predownload.outcome == 'success'
+        continue-on-error: true
+        run: |
+          date=$(date +%Y-%m-%d)
+          chat_downloader https://www.youtube.com/c/"$channelid"/live --message_groups "messages superchat" -o "$date".json
+
+      - name: Add and commit files
+        if: steps.predownload.outcome == 'success'
+        continue-on-error: true
+        run: |
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          git add .
+          git commit -m "Update data"
+          git push
