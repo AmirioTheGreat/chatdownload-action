@@ -43,6 +43,10 @@ jobs:
           date=$(date +%Y-%m-%d)
           chat_downloader https://www.youtube.com/watch?v="$videoId" --message_groups "messages superchat" -o "$date".json
 
+      - name: Checkout repo
+        if: steps.predownload.outcome == 'success'
+        uses: actions/checkout@v3
+
       - name: Add and commit files
         if: steps.predownload.outcome == 'success'
         continue-on-error: true
