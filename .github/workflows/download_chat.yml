@@ -30,7 +30,6 @@ jobs:
         id: predownload
         if: steps.livecheck.outcome == 'success'
         run: |
-          sudo apt-get install -y ffmpeg
           pip install chat-downloader
 
       - name: Download streamchat
