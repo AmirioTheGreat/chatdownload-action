@@ -30,7 +30,7 @@ jobs:
         id: predownload
         if: steps.livecheck.outcome == 'success'
         run: |
-          pip install chat-downloader
+          pip install git+https://github.com/xenova/chat-downloader.git
 
       - name: Checkout repo
         if: steps.predownload.outcome == 'success'
@@ -45,7 +45,7 @@ jobs:
           videoId=$(curl -s https://www.youtube.com/c/"$channelid"/live| grep -o -E '\{"videoId":"[a-z0-9A-Z_-]{11}' | head -1)
           videoId=${videoId:12:11}
           date=$(date +%Y-%m-%d)
-          chat_downloader https://www.youtube.com/watch?v="$videoId" --message_groups "messages superchat" -o "$date".json
+          chat_downloader https://www.youtube.com/watch?v="$videoId" --message_groups all -o "$date".json
 
       - name: Add and commit files
         if: steps.predownload.outcome == 'success'
