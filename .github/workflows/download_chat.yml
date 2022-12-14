@@ -5,8 +5,8 @@ name: Download Livestream Chat
 concurrency: streamdownloader
 # Controls when the workflow will run
 on:
-  schedule:
-    - cron: '*/5 * * * *'  # every 5 minutes
+#   schedule:
+#     - cron: '*/5 * * * *'  # every 5 minutes
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
