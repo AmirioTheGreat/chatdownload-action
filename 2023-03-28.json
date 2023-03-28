@@ -1,0 +1,14 @@
+[
+    {
+        "action": {
+            "text": "Learn more",
+            "url": "https://support.google.com/youtube/answer/2853856?hl=en#safe"
+        },
+        "action_type": "add_chat_item",
+        "icon": "YOUTUBE_ROUND",
+        "message": "Welcome to live chat! Remember to guard your privacy and abide by our community guidelines.",
+        "message_id": "CjEKL0NPTU1VTklUWV9HVUlERUxJTkVTX1ZFTTIwMjMvMDMvMjctMTk6Mzk6MTguMTQ1",
+        "message_type": "viewer_engagement_message",
+        "timestamp": 1679971158145119
+    }
+]
